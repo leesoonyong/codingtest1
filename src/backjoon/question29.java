@@ -4,44 +4,28 @@ package backjoon;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Stack;
-import java.util.StringTokenizer;
+import java.util.*;
 
 
 public class question29 {
     /**
-     *백준 1897
-     * 스택문제
+     *백준 2164
+     * queue큐 문제
      */
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder sb = new StringBuilder();
-
-        Stack<Integer> stack = new Stack<>();
-
         int N = Integer.parseInt(br.readLine());
-        int start = 0;
+        Queue<Integer> queue = new LinkedList<>();
 
-        while(N-- > 0){
-            //수열값일단 수열까지넣자
-            int value = Integer.parseInt(br.readLine());
-            if(value > start){
-                // start + 1부터 입력받은 value 까지 push를 한다.
-                for(int i = start+1; i<= value; i++){
-                    stack.push(i);
-                    sb.append('+').append('\n');
-                }
-                start = value; //다음 push할 때의 오름차순을 유지하기 위한 변수 초기화
-            }
-            else if(stack.peek() != value){
-                System.out.println("NO");
-                return;
-            }
-            stack.pop();
-            sb.append('-').append('\n');
-
+        for (int i = 1; i <= N; i++) {
+            queue.add(i);
         }
-        System.out.println(sb);
+        int size = queue.size();
+        while (size-- > 1) {
+            queue.poll(); // 제일 위의 카드를 바닥에 버림
+            queue.add(queue.poll()); // 그 다음 카드를 제일 아래로 옮김
+        }
 
+        System.out.println(queue.poll());
     }
 }
